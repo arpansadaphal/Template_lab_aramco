@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar/Navbar"
 import Hero from "@/components/Hero"
+import Impact from "@/components/Impact"
 // import Metrics from "@/components/metrics/Metrics"
 // import Industries from "@/components/industries/Industries"
 // import Manufacturing from "@/components/manufacturing/Manufacturing"
@@ -15,6 +16,8 @@ export default function Home() {
   return (
     <div >
       <Navbar/>
+      <Hero/>
+      <Impact/>
     </div>
   )
 }

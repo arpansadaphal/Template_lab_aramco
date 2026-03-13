@@ -1,243 +1,183 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Menu, X, ChevronDown } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger
+} from "@/components/ui/navigation-menu"
 
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose
+} from "@/components/ui/sheet"
+
+import { Button } from "@/components/ui/button"
+import { Menu, X } from "lucide-react"
+import Link from "next/link"
+import { useState, useEffect } from "react"
 
 export default function Navbar() {
 
   const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [megaOpen, setMegaOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-
+    const handleScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  
   return (
 
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
-      ${scrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-transparent"}`}
-    >
+<header
+  className={`fixed top-0 w-full z-50 transition-all duration-300
+  ${scrolled
+    ? "bg-white/90 backdrop-blur-xl border-b text-black"
+    : "bg-transparent text-white"
+  }`}
+>
 
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
 
         {/* Logo */}
-        <div className="text-xl font-semibold">
+
+        <Link href="/" className="text-xl font-semibold tracking-wide">
           POLYMERCO
-        </div>
+        </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-8 text-sm font-medium items-center">
+        {/* Desktop Navigation */}
 
-          {/* Products with mega menu */}
-          <div
-            className="relative"
-            onMouseEnter={() => setMegaOpen(true)}
-            onMouseLeave={() => setMegaOpen(false)}
-          >
+        <NavigationMenu className="hidden md:flex">
 
-            <div className="flex items-center gap-1 cursor-pointer group">
-              Products
-              <ChevronDown size={16} />
+          <NavigationMenuList className="gap-8">
 
-              <span className="absolute left-0 bottom-[-4px] w-0 h-[1px] bg-black transition-all group-hover:w-full"></span>
-            </div>
-<AnimatePresence>
-{megaOpen && (
+            <NavigationMenuItem>
 
-<motion.div
-initial={{ opacity:0, y:20 }}
-animate={{ opacity:1, y:0 }}
-exit={{ opacity:0, y:20 }}
-transition={{ duration:0.25 }}
-className="absolute left-0 top-full w-screen bg-white shadow-xl border-t"
->
+              <NavigationMenuTrigger className="bg-white text-black shadow-xl rounded-lg">
 
-<div className="max-w-7xl mx-auto grid grid-cols-4 gap-12 py-12">
+                Products
+              </NavigationMenuTrigger>
 
-{/* Column 1 */}
-<div>
-<h4 className="font-semibold mb-4 text-sm uppercase tracking-wide">
-Polymer Types
-</h4>
+              <NavigationMenuContent>
 
-<ul className="space-y-3 text-gray-600 text-sm">
-<li className="hover:text-black cursor-pointer">Polyethylene</li>
-<li className="hover:text-black cursor-pointer">Polypropylene</li>
-<li className="hover:text-black cursor-pointer">Elastomers</li>
-<li className="hover:text-black cursor-pointer">Specialty Materials</li>
-</ul>
-</div>
+                <div className="grid grid-cols-2 gap-10 p-10 w-[640px]">
 
-{/* Column 2 */}
-<div>
-<h4 className="font-semibold mb-4 text-sm uppercase tracking-wide">
-Applications
-</h4>
+                  <div>
+                    <h4 className="font-semibold mb-3">
+                      Polymer Types
+                    </h4>
 
-<ul className="space-y-3 text-gray-600 text-sm">
-<li>Packaging</li>
-<li>Automotive</li>
-<li>Healthcare</li>
-<li>Consumer Goods</li>
-</ul>
-</div>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
 
-{/* Column 3 */}
-<div>
-<h4 className="font-semibold mb-4 text-sm uppercase tracking-wide">
-Industries
-</h4>
+                      <li>Polyethylene</li>
+                      <li>Polypropylene</li>
+                      <li>Elastomers</li>
+                      <li>Specialty Polymers</li>
 
-<ul className="space-y-3 text-gray-600 text-sm">
-<li>Construction</li>
-<li>Electronics</li>
-<li>Energy</li>
-<li>Transportation</li>
-</ul>
-</div>
+                    </ul>
+                  </div>
 
-{/* Column 4 Featured */}
-<div className="bg-gray-100 p-6">
+                  <div>
+                    <h4 className="font-semibold mb-3">
+                      Applications
+                    </h4>
 
-<h4 className="font-semibold mb-3">
-Advanced Polymer Solutions
-</h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
 
-<p className="text-sm text-gray-600 mb-4">
-Explore our high-performance materials designed for next-generation industries.
-</p>
+                      <li>Automotive</li>
+                      <li>Packaging</li>
+                      <li>Construction</li>
+                      <li>Electronics</li>
 
-<button className="text-sm border px-4 py-2">
-Explore Products
-</button>
+                    </ul>
+                  </div>
 
-</div>
+                </div>
 
-</div>
+              </NavigationMenuContent>
 
-</motion.div>
-)}
-</AnimatePresence>
+            </NavigationMenuItem>
 
-          </div>
+            <NavigationMenuItem>
+              <Link href="#">Industries</Link>
+            </NavigationMenuItem>
 
-          <a className="relative group cursor-pointer">
-            Industries
-            <span className="absolute left-0 bottom-[-4px] w-0 h-[1px] bg-black transition-all group-hover:w-full"></span>
-          </a>
+            <NavigationMenuItem>
+              <Link href="#">Innovation</Link>
+            </NavigationMenuItem>
 
-          <a className="relative group cursor-pointer">
-            Innovation
-            <span className="absolute left-0 bottom-[-4px] w-0 h-[1px] bg-black transition-all group-hover:w-full"></span>
-          </a>
+            <NavigationMenuItem>
+              <Link href="#">Sustainability</Link>
+            </NavigationMenuItem>
 
-          <a className="relative group cursor-pointer">
-            Sustainability
-            <span className="absolute left-0 bottom-[-4px] w-0 h-[1px] bg-black transition-all group-hover:w-full"></span>
-          </a>
+            <NavigationMenuItem>
+              <Link href="#">Insights</Link>
+            </NavigationMenuItem>
 
-          <a className="relative group cursor-pointer">
-            Insights
-            <span className="absolute left-0 bottom-[-4px] w-0 h-[1px] bg-black transition-all group-hover:w-full"></span>
-          </a>
+          </NavigationMenuList>
 
-          <a className="relative group cursor-pointer">
-            About
-            <span className="absolute left-0 bottom-[-4px] w-0 h-[1px] bg-black transition-all group-hover:w-full"></span>
-          </a>
+        </NavigationMenu>
 
-        </nav>
+        {/* Desktop CTA */}
 
-        {/* Contact Button */}
-        <button className="hidden md:block px-5 py-2 border border-black text-sm hover:bg-black hover:text-white transition">
+        <Button className="hidden md:flex">
           Contact
-        </button>
+        </Button>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        {/* Mobile Hamburger */}
+
+        <Sheet>
+
+          <SheetTrigger asChild>
+
+            <button className="md:hidden">
+              <Menu size={28} />
+            </button>
+
+          </SheetTrigger>
+
+         <SheetContent side="right" className="w-[320px] px-8">
+
+  <div className="flex flex-col justify-center items-center flex-1">
+
+    <nav className="flex flex-col items-center space-y-8 text-lg font-medium w-full">
+
+      <Link href="#" className="w-full text-center border-b pb-4">
+        Products
+      </Link>
+
+      <Link href="#" className="w-full text-center border-b pb-4">
+        Industries
+      </Link>
+
+      <Link href="#" className="w-full text-center border-b pb-4">
+        Innovation
+      </Link>
+
+      <Link href="#" className="w-full text-center border-b pb-4">
+        Sustainability
+      </Link>
+
+      <Link href="#" className="w-full text-center border-b pb-4">
+        Insights
+      </Link>
+
+      <Button className="mt-6 w-full">
+        Contact
+      </Button>
+
+    </nav>
+
+  </div>
+
+</SheetContent>
+
+        </Sheet>
 
       </div>
-
-      {/* Mobile Menu */}
-
-    <AnimatePresence>
-{mobileOpen && (
-
-<motion.div
-initial={{ x:"100%" }}
-animate={{ x:0 }}
-exit={{ x:"100%" }}
-transition={{ duration:0.35 }}
-className="fixed inset-0 bg-white z-50 p-8 md:hidden"
->
-
-{/* Header */}
-
-<div className="flex justify-between items-center mb-12">
-
-<h2 className="text-xl font-semibold">
-POLYMERCO
-</h2>
-
-<button onClick={()=>setMobileOpen(false)}>
-<X size={32}/>
-</button>
-
-</div>
-
-{/* Links */}
-
-<motion.div
-initial="hidden"
-animate="visible"
-variants={{
-visible:{
-transition:{ staggerChildren:0.08 }
-}
-}}
-className="flex flex-col gap-8 text-2xl font-medium"
->
-
-{["Products","Industries","Innovation","Sustainability","Insights","About"].map((item)=>(
-
-<motion.a
-key={item}
-variants={{
-hidden:{ opacity:0, y:20 },
-visible:{ opacity:1, y:0 }
-}}
-className="border-b pb-4"
->
-{item}
-</motion.a>
-
-))}
-
-<button className="mt-10 border p-4 text-lg">
-Contact
-</button>
-
-</motion.div>
-
-</motion.div>
-
-)}
-</AnimatePresence>
 
     </header>
   )
