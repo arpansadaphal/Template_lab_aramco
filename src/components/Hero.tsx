@@ -28,7 +28,7 @@ const y = useTransform(scrollY, [0, 100], [0, 100])
       {/* Video Background */}
 
      <motion.div
-  style={{ y }}
+  // style={{ y }}
   className="absolute w-full h-full"
 >
 
